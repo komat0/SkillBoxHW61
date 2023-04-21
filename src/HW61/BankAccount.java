@@ -1,14 +1,13 @@
 package HW61;
 
 import java.time.LocalDate;
-import java.util.Calendar;
 
 public class BankAccount {
 
-    private long originalAmount;
+    protected long originalAmount;
     private String accountHolder;
     private final LocalDate accountCreatedDate = LocalDate.now();
-    private LocalDate lastWithdrawDate;
+    LocalDate lastWithdrawDate;
 
     public BankAccount(long originalAmount, String accountHolder) {
         this.originalAmount = originalAmount;
@@ -17,9 +16,13 @@ public class BankAccount {
 
     // Метод снятия денег со счета
     public void withdrawMoney(long amount) {
-        this.originalAmount -= amount;
-        lastWithdrawDate = LocalDate.now();
-        System.out.println("Произведено снятие наличных в количестве " + amount);
+        if (this.originalAmount >= amount) {
+            this.originalAmount -= amount;
+            lastWithdrawDate = LocalDate.now();
+            System.out.println("Произведено снятие наличных в количестве " + amount);
+        } else {
+            System.out.println("На счете недостаточно средств");
+        }
     }
 
     // Метод пополнения счета
@@ -52,7 +55,6 @@ public class BankAccount {
     }
 
     public LocalDate getLastWithdrawDate() {
-
         System.out.println("Деньги снимались последний раз: " + accountCreatedDate);
         return lastWithdrawDate;
     }
